@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Attendance | {{ lecture['lecture_name'] }}</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9fc;
+      color: #333;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 22px;
+      color: #4F46E5;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 26px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .actions {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #dc3545;
+      color: white;
+      padding: 10px 16px;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background-color: #c82333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+      }
+
+      .container {
+        padding: 30px 20px;
+        margin: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">AttendEase</div>
+    <nav>
+      <a href="/dashboard" class="primary-btn">Dashboard</a>
+      <a href="/logout" class="primary-btn">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Attendance Container -->
+  <div class="container">
+    <h2>📊 Attendance for "{{ lecture['lecture_name'] }}"</h2>
+    <p>
+      <strong>Teacher:</strong> {{ lecture['teacher_name'] }}<br>
+      <strong>Date:</strong> {{ lecture['date'] }}<br>
+      <strong>Time:</strong> {{ lecture['time'] }}<br>
+      <strong>Total Present:</strong> {{ entries|length }}
+    </p>
+
+  
+
+    <!-- Attendance Table -->
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Roll No</th>
+        <th>Timestamp</th>
+        <th>IP Address</th>
+      </tr>
+      {% for entry in entries %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ entry['name'] }}</td>
+        <td>{{ entry['roll_no'] }}</td>
+        <td>{{ entry['timestamp'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ entry['ip'] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+</body>
+</html>

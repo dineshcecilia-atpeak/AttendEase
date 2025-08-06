@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lecture QR | {{ lecture_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f3f4f6;
+    }
+
+    .navbar {
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #4F46E5;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      color: #4F46E5;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #4338ca;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin: 6px 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .qr-image {
+      margin: 30px 0 20px;
+    }
+
+    .qr-image img {
+      width: 260px;
+      height: 260px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .link-box {
+      background: #edf2f7;
+      padding: 14px;
+      border-radius: 8px;
+      margin: 25px 0;
+      word-wrap: break-word;
+      font-size: 15px;
+    }
+
+    .link-box a {
+      color: #1a202c;
+      word-break: break-all;
+    }
+
+    .copy-btn,
+    .download-btn,
+    .stop-btn {
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: background 0.3s ease;
+    }
+
+    .copy-btn {
+      background-color: #4F46E5;
+      color: white;
+    }
+
+    .copy-btn:hover {
+      background-color: #4338ca;
+    }
+
+    .download-btn {
+      background-color: #17a2b8;
+      color: white;
+    }
+
+    .download-btn:hover {
+      background-color: #138496;
+    }
+
+    .stop-btn {
+      background-color: #dc3545;
+      color: white;
+      font-weight: 500;
+      margin-top: 30px;
+    }
+
+    .stop-btn:hover {
+      background-color: #c82333;
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+      }
+
+      .container {
+        margin: 30px 20px;
+        padding: 30px 20px;
+      }
+
+      .qr-image img {
+        width: 220px;
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">AttendEase</div>
+    <nav>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <!-- QR Info Card -->
+  <div class="container">
+    <h2>QR Code for: <strong>{{ lecture_name }}</strong></h2>
+    <p><strong>Teacher:</strong> {{ teacher_name }}</p>
+    <p><strong>Date:</strong> {{ date }} &nbsp;&nbsp; <strong>Time:</strong> {{ time }}</p>
+
+    <div class="link-box">
+      <strong>Link:</strong><br>
+      <a href="{{ url }}" target="_blank">{{ url }}</a><br>
+      <button class="copy-btn" onclick="copyToClipboard()">Copy Link</button>
+    </div>
+
+    <div class="qr-image">
+      <img src="{{ url_for('static', filename='qr/' + lecture_id + '.png') }}" alt="QR Code">
+    </div>
+    
+    <div style="margin-top: 20px;">
+      <a href="{{ url_for('static', filename='qr/' + lecture_id + '.png') }}" download="qr_{{ lecture_id }}.png">
+        <button type="button" class="download-btn">🖨️ Download QR</button>
+      </a>
+    </div>
+    
+
+    <form action="/stop/{{ lecture_id }}" method="POST">
+      <button type="submit" class="stop-btn">Stop QR</button>
+    </form>
+  </div>
+
+  <script>
+    function copyToClipboard() {
+      navigator.clipboard.writeText("{{ url }}")
+        .then(() => alert("Link copied to clipboard!"))
+        .catch(() => alert("Failed to copy link."));
+    }
+  </script>
+
+</body>
+</html>

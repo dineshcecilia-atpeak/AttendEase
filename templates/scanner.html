@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scan QR | AttendEase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4fa;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h2, h3 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #reg_form {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #4F46E5;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #4338ca;
+    }
+
+    @media (max-width: 480px) {
+      h2, h3 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Marking Attendance...</h2>
+
+  <form id="reg_form" style="display:none;" onsubmit="submitForm(event)">
+    <h3>Please Register</h3>
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="text" id="roll_no" placeholder="Roll Number" required>
+    <input type="hidden" id="device_id">
+    <button type="submit">Submit & Mark</button>
+  </form>
+
+  <script>
+    function setCookie(name, value, days) {
+      const expires = new Date(Date.now() + days*24*60*60*1000).toUTCString();
+      document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+    }
+
+    function getCookie(name) {
+      return document.cookie
+        .split('; ')
+        .find(row => row.startsWith(name + '='))?.split('=')[1];
+    }
+
+    function getDeviceID() {
+      let id = getCookie("device_id");
+      if (!id) {
+        id = crypto.randomUUID();
+        setCookie("device_id", id, 365); // Store for 1 year
+      }
+      return id;
+    }
+
+    async function checkAndMark() {
+      const device_id = getDeviceID();
+      const res = await fetch("/check_user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ device_id })
+      });
+
+      const result = await res.json();
+      if (result.status === "known") {
+        markAttendance(device_id);
+      } else {
+        document.getElementById("reg_form").style.display = "block";
+        document.getElementById("device_id").value = device_id;
+      }
+    }
+
+    async function markAttendance(device_id) {
+      const res = await fetch("/mark/{{ lecture_id }}", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ device_id })
+      });
+
+      const html = await res.text();
+      document.open();
+      document.write(html);
+      document.close();
+    }
+
+    async function submitForm(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const roll = document.getElementById("roll_no").value;
+      const device_id = document.getElementById("device_id").value;
+
+      await fetch("/register_inline", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ device_id, name, roll_no: roll })
+      });
+
+      markAttendance(device_id);
+    }
+
+    window.onload = checkAndMark;
+  </script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard | AttendEase</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f4f8;
+      color: #333;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 24px;
+      color: #4F46E5;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .welcome {
+      font-weight: 500;
+    }
+
+    .primary-btn {
+      background: #4F46E5;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .primary-btn:hover {
+      background: #3f3edc;
+    }
+
+    .container {
+      padding: 60px;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    .feature-card h3 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .button {
+      display: inline-block;
+      background: #4F46E5;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #3f3edc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 14px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f0f2f5;
+      color: #333;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .actions form {
+      display: inline;
+    }
+
+    .actions a,
+    .actions button {
+      background-color: #4F46E5;
+      color: white;
+      padding: 6px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      text-decoration: none;
+    }
+
+    .actions a:hover,
+    .actions button:hover {
+      opacity: 0.9;
+    }
+
+    .stop {
+      background-color: #dc3545 !important;
+    }
+
+    .delete {
+      background-color: #6c757d !important;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        margin-top: 10px;
+        gap: 10px;
+      }
+
+      .actions {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      th, td {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">AttendEase</div>
+    <nav>
+      <span class="welcome">👋 Welcome, {{ session.username }}</span>
+      <a href="/logout" class="primary-btn">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Dashboard Content -->
+  <div class="container">
+
+    <!-- Create Lecture -->
+    <div class="feature-card">
+      <h3>Your Dashboard</h3>
+      <a href="/create" class="button">➕ Create New Lecture</a>
+    </div>
+
+    <!-- Lectures Table -->
+    <div class="feature-card">
+      <h3>Your Lectures</h3>
+      {% if lectures|length == 0 %}
+        <p>No lectures found. Click above to create one.</p>
+      {% else %}
+      <table>
+        <tr>
+          <th>Lecture Name</th>
+          <th>Date</th>
+          <th>QR Status</th>
+          <th>Attendance</th>
+          <th>QR Code</th>
+          <th>Status Toggle</th>
+          <th>Delete</th>
+        </tr>
+
+        {% for lec in lectures %}
+        <tr>
+          <td>{{ lec['lecture_name'] }}</td>
+
+          <td>{{ lec['date'] }} at {{ lec['time'] }}</td>
+
+          <td>{% if lec['active'] %}✅ Active{% else %}❌ Stopped{% endif %}</td>
+
+          <!-- View Attendance -->
+          <td>
+            <a href="{{ url_for('view_attendance', lecture_id=lec['_id']|string) }}" class="button">View Attendance</a>
+          </td>
+
+          <!-- View QR -->
+          <td>
+            <a href="{{ url_for('qr', lecture_id=lec['_id']) }}" class="button">View QR</a>
+          </td>
+
+          <!-- Toggle Active/Stop -->
+          <td>
+            {% if lec['active'] %}
+            <form method="POST" action="/stop/{{ lec['_id'] }}" onsubmit="return confirm('Are you sure you want to stop this QR?');">
+              <button type="submit" class="stop">Stop</button>
+            </form>
+            {% else %}
+            <form method="POST" action="/activate/{{ lec['_id'] }}" onsubmit="return confirm('Activate this QR again?');">
+              <button type="submit" class="button">Activate</button>
+            </form>
+            {% endif %}
+          </td>
+
+          <!-- Delete Lecture -->
+          <td>
+            <form method="POST" action="/delete/{{ lec['_id'] }}" onsubmit="return confirmDelete(this);">
+              <button type="submit" class="delete">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- JS for delete confirmation -->
+  <script>
+    function confirmDelete(form) {
+      const password = prompt("Enter your password to confirm deletion:");
+      if (!password) return false;
+
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "password";
+      input.value = password;
+      form.appendChild(input);
+      return true;
+    }
+  </script>
+</body>
+</html>

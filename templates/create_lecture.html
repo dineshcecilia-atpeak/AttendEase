@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Lecture | AttendEase</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9fc;
+      color: #333;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 22px;
+      color: #4F46E5;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .primary-btn {
+      background: #4F46E5;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 500;
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 6px;
+    }
+
+    input[type=text],
+    input[type=date],
+    input[type=time] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: #4F46E5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    .error-message {
+      color: red;
+      text-align: center;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .container {
+        margin: 30px 20px;
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">AttendEase</div>
+    <nav>
+      <a href="/dashboard" class="primary-btn">Dashboard</a>
+      <a href="/logout" class="primary-btn">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Form Card -->
+  <div class="container">
+    <h2>Create a New Lecture</h2>
+
+    {% if error %}
+      <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+      <label for="lecture_name">Lecture Name:</label>
+      <input type="text" id="lecture_name" name="lecture_name" required>
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="time">Time:</label>
+      <input type="time" id="time" name="time" required>
+
+      <button type="submit">Generate QR Code</button>
+    </form>
+  </div>
+
+</body>
+</html>

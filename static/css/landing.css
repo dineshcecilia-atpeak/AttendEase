@@ -1,0 +1,403 @@
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9f9fc;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.navbar .logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.navbar nav a {
+  margin: 0 15px;
+  font-weight: 500;
+}
+
+.auth-buttons .text-btn,
+.auth-buttons .primary-btn {
+  margin-left: 10px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.text-btn {
+  background: transparent;
+  color: #333;
+}
+
+.primary-btn {
+  background: #4F46E5;
+  color: white;
+}
+
+section {
+  padding: 80px 60px;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  flex: 1;
+  max-width: 600px;
+}
+
+.hero-text h1 {
+  font-size: 42px;
+}
+
+.highlight {
+  color: #3B82F6;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+  font-weight: 500;
+}
+
+.hero-img img {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 40px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card h4 {
+  color: #4F46E5;
+  margin-bottom: 10px;
+}
+
+.pricing-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.price-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 280px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.price-card:hover {
+  transform: translateY(-5px);
+}
+
+.price-card.popular {
+  border: 2px solid #4F46E5;
+}
+
+.price-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.price-card ul li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cta {
+  background: linear-gradient(to right, #4F46E5, #3B82F6);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+  border-radius: 12px;
+}
+
+.cta .primary-btn {
+  background: white;
+  color: #4F46E5;
+  margin: 10px;
+  font-weight: 600;
+}
+
+footer.footer {
+  background: #1e1e2f;
+  color: white;
+  padding: 40px 60px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-columns {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.footer-columns h4 {
+  margin-bottom: 10px;
+}
+
+.footer-columns a {
+  display: block;
+  margin-bottom: 6px;
+  color: #bbb;
+  font-size: 14px;
+}
+
+/* Fix button styles */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.btn.primary {
+  background: #4F46E5;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:not(.primary) {
+  border: 2px solid #4F46E5;
+  color: #4F46E5;
+  background: transparent;
+}
+
+/* Features section fix */
+.features {
+  background: #f0f4ff;
+  padding: 80px 60px;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 30px;
+}
+
+.feature {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+  font-weight: 500;
+  font-size: 18px;
+}
+
+
+/* Pricing section fix */
+.pricing {
+  padding: 80px 60px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.pricing h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.pricing-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.card {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 16px;
+  width: 280px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card.popular {
+  border: 2px solid #4F46E5;
+}
+
+.card h3 {
+  color: #4F46E5;
+}
+
+.card ul {
+  text-align: left;
+  padding-left: 0;
+  list-style: none;
+}
+
+.card ul li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Responsive fix */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .navbar nav {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-text {
+    max-width: 100%;
+  }
+
+  .hero-img img {
+    margin-top: 20px;
+  }
+
+  section {
+    padding: 60px 20px;
+  }
+
+  .pricing-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+}
+
+.how-it-works {
+  background: #f9fafe;
+  padding: 80px 60px;
+  text-align: center;
+}
+
+.how-it-works h2 {
+  font-size: 32px;
+  margin-bottom: 50px;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.feature-card {
+  background: white;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  text-align: left;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card h4 {
+  color: #4F46E5;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.feature-card p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Responsive layout */
+@media (max-width: 992px) {
+  .how-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .how-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

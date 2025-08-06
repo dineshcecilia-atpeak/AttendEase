@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Redirecting...</title>
+</head>
+<body>
+  <script>
+    // Store JWT in localStorage
+    const token = "{{ token }}";
+    localStorage.setItem("jwt_token", token);
+
+    // Restore as cookie
+    document.cookie = `token=${token}; path=/`;
+
+    // Redirect to dashboard
+    window.location.href = "/dashboard";
+  </script>
+</body>
+</html>

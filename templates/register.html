@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | AttendEase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .register-box {
+      background-color: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #4F46E5;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #4338ca;
+    }
+
+    @media (max-width: 480px) {
+      .register-box {
+        padding: 30px 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="register-box">
+    <h2>Register Your Name</h2>
+    <form method="POST" onsubmit="return setDeviceID()">
+      <input type="text" name="name" placeholder="Enter your name" required>
+      <input type="hidden" name="device_id" id="device_id">
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function getDeviceID() {
+      let id = localStorage.getItem("device_id");
+      if (!id) {
+        id = crypto.randomUUID();
+        localStorage.setItem("device_id", id);
+      }
+      return id;
+    }
+
+    function setDeviceID() {
+      document.getElementById("device_id").value = getDeviceID();
+      return true;  // Ensure form submits after setting ID
+    }
+
+    window.onload = () => {
+      document.getElementById("device_id").value = getDeviceID();
+    };
+  </script>
+</body>
+</html>
