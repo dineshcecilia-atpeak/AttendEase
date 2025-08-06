@@ -16,28 +16,6 @@
 
 ---
 
-## 📂 Folder Structure
-
-AttendEase/
-├── app.py
-├── static/
-│ └── qr/
-├── templates/
-│ ├── dashboard.html
-│ ├── create_lecture.html
-│ ├── qr_display.html
-│ ├── login.html
-│ ├── register_teacher.html
-│ ├── scanner.html
-│ ├── success.html
-│ └── already.html
-├── .env
-├── .gitignore
-├── requirements.txt
-└── README.md
-
-
----
 
 ## ⚙️ Installation
 
@@ -51,3 +29,32 @@ cd AttendEase
 
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
+
+3. Install required packages
+
+pip install -r requirements.txt
+
+4. Create .env file
+
+FLASK_SECRET_KEY=your_flask_secret_key
+JWT_SECRET=your_jwt_secret_key
+MONGODB_URI=mongodb://localhost:27017
+NGROK_URL=https://your-ngrok-subdomain.ngrok-free.app
+
+5. Run the app
+
+python app.py
+
+Access via ngrok (for student mobile access)
+If testing externally, run:
+
+ngrok http 5050
+Copy the generated https://... URL and paste it into your .env as NGROK_URL.
+---
+
+## 👨‍💻 Author
+
+Developed by Cecilia Dinesh
+GitHub: @dineshcecilia-atpeak
+
+---
