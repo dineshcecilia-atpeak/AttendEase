@@ -25,7 +25,7 @@
 git clone https://github.com/dineshcecilia-atpeak/AttendEase.git
 cd AttendEase
 
-### 2. Create a virtual environment (recommended)
+2. Create a virtual environment (recommended)
 
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
@@ -50,9 +50,10 @@ If testing externally, run:
 
 ngrok http 5050
 Copy the generated https://... URL and paste it into your .env as NGROK_URL.
+
 ---
 
-## 👨‍💻 Author
+## Author
 
 Developed by Cecilia Dinesh
 GitHub: @dineshcecilia-atpeak
